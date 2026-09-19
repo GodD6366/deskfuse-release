@@ -67,10 +67,15 @@
       alt: "uniDesk 设备界面",
       caption: "设备页：自动发现与手动配对，连接路由与传输活动全程可见",
     },
-    sharing: {
-      src: "assets/shot-sharing.jpg",
-      alt: "uniDesk 分享与传输界面",
-      caption: "分享与传输：局域网扫码即传，任务进度、排队与重试清晰可见",
+    screens: {
+      src: "assets/shot-screens.jpg",
+      alt: "uniDesk 屏幕与键鼠界面",
+      caption: "屏幕与键鼠：真实显示器布局自由摆放，共享键鼠一键开关",
+    },
+    remote: {
+      src: "assets/shot-remote.jpg",
+      alt: "uniDesk 远程窗口界面",
+      caption: "远程窗口：把另一台设备变成一块副屏，应用与文件随手可取",
     },
   };
   const shotImg = document.getElementById("shot-image");
@@ -123,6 +128,15 @@
   const downloadBtn = document.getElementById("download-btn");
   const releaseLink = document.getElementById("release-link");
 
+  // 临时下载地址：2026-10-07 00:00（UTC+8）前生效，之后自动恢复 GitHub Releases
+  const TEMP_DOWNLOAD_URL = "https://share.fnnas.net/s/021835d5855e4abe85";
+  const tempDownloadActive = Date.now() < new Date("2026-10-07T00:00:00+08:00").getTime();
+
+  if (tempDownloadActive) {
+    if (downloadBtn) downloadBtn.href = TEMP_DOWNLOAD_URL;
+    if (releaseLink) releaseLink.href = TEMP_DOWNLOAD_URL;
+  }
+
   fetch(RELEASES_API, { headers: { Accept: "application/vnd.github+json" } })
     .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
     .then((releases) => {
@@ -134,8 +148,10 @@
       }
       const dmg = (latest.assets || []).find((a) => /arm64.*\.dmg$/i.test(a.name || ""));
       const url = dmg ? dmg.browser_download_url : latest.html_url || RELEASES_PAGE;
-      if (downloadBtn) downloadBtn.href = url;
-      if (releaseLink) releaseLink.href = latest.html_url || RELEASES_PAGE;
+      if (!tempDownloadActive) {
+        if (downloadBtn) downloadBtn.href = url;
+        if (releaseLink) releaseLink.href = latest.html_url || RELEASES_PAGE;
+      }
     })
     .catch(() => {
       /* 离线或限流时保留静态回退 */

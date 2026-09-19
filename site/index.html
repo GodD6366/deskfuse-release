@@ -10,7 +10,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/shot-clipboard.jpg" />
   <link rel="icon" type="image/png" href="assets/icon.png" />
-  <link rel="stylesheet" href="styles.css?v=20260919b" />
+  <link rel="stylesheet" href="styles.css?v=20260919f" />
 </head>
 <body>
   <!-- 背景层：极光 + 网格 + 噪点 -->
@@ -64,7 +64,7 @@
           由 Rust 引擎与 SwiftUI 打造，经 QUIC 加密，只在你的可信设备之间运行。
         </p>
         <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" id="download-btn" href="https://github.com/GodD6366/unidesk-release/releases" target="_blank" rel="noopener">
+          <a class="btn btn-primary btn-lg" id="download-btn" href="https://share.fnnas.net/s/021835d5855e4abe85" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             下载 macOS 版
           </a>
@@ -74,7 +74,6 @@
       </div>
       <div class="hero-shot reveal" data-tilt>
         <div class="shot-frame">
-          <div class="shot-frame-bar"><i></i><i></i><i></i></div>
           <img src="assets/shot-clipboard.jpg" alt="uniDesk 剪贴板界面" />
         </div>
       </div>
@@ -96,49 +95,166 @@
       </div>
       <div class="bento">
         <article class="card card-wide reveal">
-          <div class="card-icon">📋</div>
+          <div class="card-icon tile-blue">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></svg>
+          </div>
           <h3>剪贴板同步</h3>
           <p>文本、图片与原生格式在可信设备间实时同步。在 Mac 上复制，到另一台设备直接粘贴 —— 不依赖 iCloud，局域网内即时抵达。</p>
           <div class="card-visual clipboard-demo" aria-hidden="true">
-            <div class="chip chip-a">https://www.apple.com/cn</div>
-            <div class="chip chip-b">IMG_2887.JPG · 2.4 MB</div>
-            <div class="chip chip-c">真正的效率，是让技术隐形。</div>
+            <div class="mini-window">
+              <div class="mini-window-head">
+                <span class="mini-dot"></span>
+                <span class="mini-title">剪贴板 · 所有设备</span>
+                <span class="mini-sync"><i></i>已同步到 2 台设备</span>
+              </div>
+              <div class="mini-grid">
+                <div class="mini-clip active">
+                  <span class="mini-clip-icon icon-link">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  </span>
+                  <div class="mini-clip-body"><b>https://www.apple.com/cn</b><i>13:24</i></div>
+                </div>
+                <div class="mini-clip">
+                  <span class="mini-clip-icon icon-img">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5a2 2 0 0 0-3 0L6 20"/></svg>
+                  </span>
+                  <div class="mini-clip-body"><b>IMG_2887.JPG · 2.4 MB</b><i>13:21</i></div>
+                </div>
+                <div class="mini-clip">
+                  <span class="mini-clip-icon icon-text">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="12" y2="18"/></svg>
+                  </span>
+                  <div class="mini-clip-body"><b>真正的效率，是让技术隐形。</b><i>13:18</i></div>
+                </div>
+                <div class="mini-clip">
+                  <span class="mini-clip-icon icon-file">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  </span>
+                  <div class="mini-clip-body"><b>设计稿-首页.png · 3.4 MB</b><i>13:12</i></div>
+                </div>
+              </div>
+            </div>
           </div>
         </article>
         <article class="card reveal">
-          <div class="card-icon">🔍</div>
+          <div class="card-icon tile-violet">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </div>
           <h3>剪贴板历史</h3>
           <p>跨设备同步的剪贴板历史，支持图片内容搜索。昨天复制过的截图，今天搜得到。</p>
+          <div class="card-visual search-demo" aria-hidden="true">
+            <div class="mini-search">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <span>风景截图</span>
+              <kbd>⌘F</kbd>
+            </div>
+            <div class="mini-result">
+              <span class="mini-thumb"></span>
+              <div class="mini-clip-body"><b>风景图.png</b><i>命中图片内容 · 3.4 MB</i></div>
+              <span class="mini-hit">OCR</span>
+            </div>
+            <div class="mini-result dim">
+              <span class="mini-thumb t2"></span>
+              <div class="mini-clip-body"><b>桌面截图.png</b><i>昨天 18:02</i></div>
+            </div>
+          </div>
         </article>
         <article class="card reveal">
-          <div class="card-icon">🗂️</div>
+          <div class="card-icon tile-teal">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6M9 14l3-3 3 3"/></svg>
+          </div>
           <h3>文件传输</h3>
           <p>按需传输，小文件可提前送达；完整保留名称与文件夹结构，历史缓存有容量上限与清理回执。</p>
+          <div class="card-visual transfer-demo" aria-hidden="true">
+            <div class="mini-file-row">
+              <span class="mini-clip-icon icon-file">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+              </span>
+              <div class="mini-clip-body"><b>项目备份.zip</b><i>128 MB · 接收中</i></div>
+              <span class="mini-speed">42 MB/s</span>
+            </div>
+            <div class="mini-progress"><i></i></div>
+            <div class="mini-file-row done">
+              <span class="mini-clip-icon icon-img">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5a2 2 0 0 0-3 0L6 20"/></svg>
+              </span>
+              <div class="mini-clip-body"><b>设计稿-首页.png</b><i>3.4 MB · 已写入剪贴板</i></div>
+              <span class="mini-done-check">已完成 ✓</span>
+            </div>
+          </div>
         </article>
         <article class="card reveal">
-          <div class="card-icon">🧺</div>
+          <div class="card-icon tile-blue">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          </div>
           <h3>暂存抽屉</h3>
           <p>把文件拖进 240 × 240 的悬浮抽屉暂存，整批拖出到 Finder，或直接发送给另一台设备。</p>
+          <div class="card-visual drawer-demo" aria-hidden="true">
+            <div class="mini-drawer">
+              <div class="mini-drawer-head"><span>暂存抽屉</span><i>3 项</i></div>
+              <div class="mini-drawer-files">
+                <span class="dfile f1">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </span>
+                <span class="dfile f2">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.5-3.5a2 2 0 0 0-3 0L6 20"/></svg>
+                </span>
+                <span class="dfile f3">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8M1 3h22v5H1zM10 12h4"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="card reveal">
+          <div class="card-icon tile-teal">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14M19.07 4.93a10 10 0 0 1 0 14.14M7.76 16.24a6 6 0 0 1 0-8.49M16.24 7.76a6 6 0 0 1 0 8.49"/></svg>
+          </div>
+          <h3>设备发现与配对</h3>
+          <p>自动发现局域网设备，也可手动输入 IPv4 定位；配对仍需对端确认，IP 不作为信任依据。</p>
+          <div class="card-visual discovery-demo" aria-hidden="true">
+            <span class="dev-radar"></span>
+            <div class="mini-device"><span class="dev-dot on"></span><b>MacBook Pro 14</b><i>在线 · 205 ms</i></div>
+            <div class="mini-device"><span class="dev-dot on"></span><b>Mac mini 工作室</b><i>在线</i></div>
+            <div class="mini-device off"><span class="dev-dot"></span><b>MacBook Air</b><i>离线</i></div>
+          </div>
         </article>
         <article class="card card-wide reveal">
-          <div class="card-icon">🖱️</div>
+          <div class="card-icon tile-violet">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
           <h3>屏幕与键鼠共享</h3>
           <p>一套键鼠跨屏控制多台设备：真实显示器布局、独立开关、权限状态可见，紧急收回一键生效。不再受同一 Apple 账号限制。</p>
           <div class="card-visual displays-demo" aria-hidden="true">
-            <div class="display-box d1"><span>MacBook Pro</span></div>
-            <div class="display-box d2"><span>iMac</span></div>
-            <div class="cursor-dot"></div>
+            <div class="screen-canvas">
+              <div class="screen-box s2">
+                <div class="screen-bar"></div>
+                <div class="screen-info"><b>02</b><span>MacBook Pro 14</span><i>1512 × 982 pt</i></div>
+              </div>
+              <div class="screen-box s1">
+                <div class="screen-bar"></div>
+                <div class="screen-info"><b>01</b><span>本机 · UniDesk</span><i>2048 × 1152 pt</i></div>
+              </div>
+              <svg class="screen-cursor" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 2l16 11-7.2 1.4L9 22z" fill="#fff" stroke="#0c1322" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="screen-toggle"><i></i>共享键鼠 · 已开启</span>
           </div>
         </article>
         <article class="card reveal">
-          <div class="card-icon">📡</div>
-          <h3>设备发现与配对</h3>
-          <p>自动发现局域网设备，也可手动输入 IPv4 定位；配对仍需对端确认，IP 不作为信任依据。</p>
-        </article>
-        <article class="card reveal">
-          <div class="card-icon">🔐</div>
+          <div class="card-icon tile-blue">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
           <h3>QUIC 加密与隐私</h3>
           <p>传输基于 QUIC 加密，设备身份持久可信。日志只记录元数据、状态与哈希 —— 永不记录剪贴板正文。</p>
+          <div class="card-visual quic-demo" aria-hidden="true">
+            <span class="tunnel-node">这台 Mac</span>
+            <span class="tunnel-line">
+              <span class="tunnel-lock">
+                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+            </span>
+            <span class="tunnel-node">MacBook Pro 14</span>
+          </div>
         </article>
       </div>
     </section>
@@ -152,11 +268,11 @@
       <div class="shot-tabs reveal" role="tablist">
         <button class="shot-tab active" data-shot="clipboard" role="tab">剪贴板</button>
         <button class="shot-tab" data-shot="devices" role="tab">设备</button>
-        <button class="shot-tab" data-shot="sharing" role="tab">分享与传输</button>
+        <button class="shot-tab" data-shot="screens" role="tab">屏幕与键鼠</button>
+        <button class="shot-tab" data-shot="remote" role="tab">远程窗口</button>
       </div>
       <div class="shot-stage reveal" data-tilt>
         <div class="shot-frame shot-frame-lg">
-          <div class="shot-frame-bar"><i></i><i></i><i></i></div>
           <img id="shot-image" src="assets/shot-clipboard.jpg" alt="uniDesk 界面截图" />
         </div>
         <p class="shot-caption" id="shot-caption">剪贴板历史：文本、图片、文件一目了然，支持图片内容搜索</p>
@@ -214,7 +330,7 @@ brew install --cask godd6366/unidesk/unidesk</code></pre>
             <p>从 GitHub Releases 下载并校验，拖入 Applications 即可。</p>
           </div>
           <ol class="steps">
-            <li><a id="release-link" href="https://github.com/GodD6366/unidesk-release/releases" target="_blank" rel="noopener">下载对应平台安装包与 SHA256SUMS</a></li>
+            <li><a id="release-link" href="https://share.fnnas.net/s/021835d5855e4abe85" target="_blank" rel="noopener">下载对应平台安装包与 SHA256SUMS</a></li>
             <li>运行 <code>shasum -a 256 -c SHA256SUMS</code> 校验完整性</li>
             <li>打开 DMG，把 uniDesk.app 拖进「应用程序」</li>
             <li>按提示允许局域网访问；键鼠共享另需辅助功能授权</li>
@@ -262,6 +378,6 @@ brew install --cask godd6366/unidesk/unidesk</code></pre>
     <p class="footer-copy">© 2026 uniDesk · 预发行阶段，构建通过不代表真实两机验收</p>
   </footer>
 
-  <script src="script.js?v=20260919b"></script>
+  <script src="script.js?v=20260919d"></script>
 </body>
 </html>
