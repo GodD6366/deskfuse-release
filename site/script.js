@@ -123,19 +123,18 @@
 
   /* ---------- 从 GitHub 获取最新版本 ---------- */
   const RELEASES_API = "https://api.github.com/repos/GodD6366/unidesk-release/releases?per_page=5";
-  const RELEASES_PAGE = "https://github.com/GodD6366/unidesk-release/releases";
   const versionBadge = document.getElementById("version-badge");
-  const downloadBtn = document.getElementById("download-btn");
-  const releaseLink = document.getElementById("release-link");
+  const downloadArm64 = document.getElementById("download-arm64");
+  const downloadIntel = document.getElementById("download-intel");
+  const releaseArm64 = document.getElementById("release-arm64");
+  const releaseIntel = document.getElementById("release-intel");
+  const releaseChecksums = document.getElementById("release-checksums");
 
-  // 临时下载地址：2026-10-07 00:00（UTC+8）前生效，之后自动恢复 GitHub Releases
-  const TEMP_DOWNLOAD_URL = "https://share.fnnas.net/s/021835d5855e4abe85";
-  const tempDownloadActive = Date.now() < new Date("2026-10-07T00:00:00+08:00").getTime();
-
-  if (tempDownloadActive) {
-    if (downloadBtn) downloadBtn.href = TEMP_DOWNLOAD_URL;
-    if (releaseLink) releaseLink.href = TEMP_DOWNLOAD_URL;
-  }
+  const setDownload = (latest, element, asset) => {
+    const match = (latest.assets || []).find((a) => a.name === asset);
+    if (match && element) element.href = match.browser_download_url;
+    return match;
+  };
 
   fetch(RELEASES_API, { headers: { Accept: "application/vnd.github+json" } })
     .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
@@ -146,12 +145,11 @@
       if (tag && versionBadge) {
         versionBadge.textContent = `最新版本 ${tag} · macOS arm64 / Intel · Windows x64`;
       }
-      const dmg = (latest.assets || []).find((a) => /arm64.*\.dmg$/i.test(a.name || ""));
-      const url = dmg ? dmg.browser_download_url : latest.html_url || RELEASES_PAGE;
-      if (!tempDownloadActive) {
-        if (downloadBtn) downloadBtn.href = url;
-        if (releaseLink) releaseLink.href = latest.html_url || RELEASES_PAGE;
-      }
+      setDownload(latest, downloadArm64, "uniDesk-arm64.dmg");
+      setDownload(latest, releaseArm64, "uniDesk-arm64.dmg");
+      setDownload(latest, downloadIntel, "uniDesk-x86_64.dmg");
+      setDownload(latest, releaseIntel, "uniDesk-x86_64.dmg");
+      setDownload(latest, releaseChecksums, "SHA256SUMS");
     })
     .catch(() => {
       /* 离线或限流时保留静态回退 */
