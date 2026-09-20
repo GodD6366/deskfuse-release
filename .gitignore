@@ -1,0 +1,6 @@
+# 依赖与构建产物
+web/node_modules/
+site/
+
+# 系统文件
+.DS_Store
