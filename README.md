@@ -43,13 +43,18 @@ brew install --cask godd6366/unidesk/unidesk
 
 ## 更新检查接口
 
-站点在自定义域名下发布与 GitHub Releases API 同形的版本列表，供更新检查在 `api.github.com` 不可达时改用：
+软件默认向 GitHub 检查更新：版本列表来自 `api.github.com`，元数据文件来自 release 资产 CDN。这两个域名在部分网络下不可达、被限流，或偶发 504，因此站点在自定义域名下重发同一份数据：
 
 ```sh
 curl -fsSL https://deskfuse.godd.cc/api/releases.json
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/SHA256SUMS
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/release.json
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/build-info.json
 ```
 
-字段与 GitHub 一致（`tag_name`、`draft`、`prerelease`、`published_at`、`assets[].name/size/state/browser_download_url`），并额外为最新版本安装包附带 `sha256`。该文件在每次 Pages 构建时由 `web/scripts/update-feed.mjs` 刷新，另有每日定时重跑；拉取失败时继续提供仓库中已提交的快照，接口不会因限流而消失。
+版本列表字段与 GitHub 一致（`tag_name`、`draft`、`prerelease`、`published_at`、`assets[].name/size/state/browser_download_url`），并额外为最新版本安装包附带 `sha256`；`api/releases/<tag>/` 下是与 GitHub 资产逐字节相同的元数据，软件校验 SHA-256 时仍然成立。
+
+这些文件在每次 Pages 构建时由 `web/scripts/update-feed.mjs` 刷新，另有每日定时重跑和 release 发布后的即时重跑；拉取失败时保留 `web/public/api/` 中已提交的快照，接口不会因限流或 CDN 抖动而消失或变空。安装包本身不镜像，软件仍从 GitHub 下载 DMG 并由 `SHA256SUMS`、Developer ID 签名把关。
 
 ## 版本与源码
 

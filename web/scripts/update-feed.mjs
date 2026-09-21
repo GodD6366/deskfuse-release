@@ -1,30 +1,41 @@
 /**
- * Refresh site/api/releases.json from the public GitHub Releases API.
+ * Refresh the release endpoints the DeskFuse updater reads.
  *
- * The DeskFuse updater and this site both read api.github.com today. That host
- * is not reachable from every network, so the site republishes the same release
- * list on its own domain:
+ * Update checks used to depend entirely on GitHub: the release list came from
+ * api.github.com and the small per-release metadata files came from the release
+ * asset CDN. Both hosts are unreachable, rate limited, or intermittently 504
+ * from some networks, so the site republishes them on its own domain:
  *
  *   https://deskfuse.godd.cc/api/releases.json
+ *   https://deskfuse.godd.cc/api/releases/<tag>/SHA256SUMS
+ *   https://deskfuse.godd.cc/api/releases/<tag>/release.json
+ *   https://deskfuse.godd.cc/api/releases/<tag>/build-info.json
  *
- * The payload keeps the GitHub Releases API shape so a client can swap the URL
- * without touching its parser. Vite copies the committed baseline from
- * web/public/api/releases.json first; this script overwrites it only after a
- * successful fetch, so a rate limit or a GitHub outage can never take the
- * endpoint offline or make it empty.
+ * The list keeps the GitHub Releases API shape so a client can swap the URL
+ * without touching its parser, and the metadata files stay byte for byte
+ * identical so the client's SHA-256 checks and code-signing checks still hold.
+ *
+ * Vite copies the committed baselines from web/public first; this script
+ * overwrites a file only after a successful fetch, so a rate limit or a GitHub
+ * outage can never take an endpoint offline, empty, or corrupt.
  */
-import { readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
-const output = resolve(scriptDirectory, '../../site/api/releases.json')
+const feedOutput = resolve(scriptDirectory, '../../site/api/releases.json')
+const mirrorOutput = resolve(scriptDirectory, '../../site/api/releases')
 const repository = process.env.DESKFUSE_RELEASE_REPOSITORY ?? 'GodD6366/deskfuse-release'
 const releaseLimit = Number.parseInt(process.env.DESKFUSE_FEED_LIMIT ?? '30', 10)
 // Overridable so the feed can be pointed at a mirror, and so the script can be
 // exercised against a stub without touching the public API.
 const apiBase = (process.env.DESKFUSE_FEED_API ?? 'https://api.github.com').replace(/\/+$/, '')
 const sumsName = 'SHA256SUMS'
+/** 更新检查会在 GitHub 资产 CDN 抖动时改读站点镜像，这三个文件都要有 */
+const metadataNames = [sumsName, 'release.json', 'build-info.json']
+const metadataLimit = 256 * 1024
+const tagPattern = /^v[0-9A-Za-z][0-9A-Za-z.\-]*$/
 
 function headers(extra = {}) {
   const values = {
@@ -45,6 +56,30 @@ async function fetchText(url) {
     throw new Error(`${response.status} ${response.statusText} for ${url}`)
   }
   return response.text()
+}
+
+async function fetchBytes(url) {
+  const response = await fetch(url, {
+    headers: headers({ Accept: 'application/octet-stream' }),
+    redirect: 'follow',
+  })
+  if (!response.ok) {
+    throw new Error(`${response.status} ${response.statusText} for ${url}`)
+  }
+  const bytes = Buffer.from(await response.arrayBuffer())
+  if (bytes.length === 0 || bytes.length > metadataLimit) {
+    throw new Error(`unexpected size ${bytes.length} for ${url}`)
+  }
+  return bytes
+}
+
+async function isReadable(path) {
+  try {
+    await readFile(path)
+    return true
+  } catch {
+    return false
+  }
 }
 
 /** `sha256  file` lines, as written by scripts/release.py. */
@@ -126,6 +161,43 @@ async function buildFeed() {
   }
 }
 
+/**
+ * Mirror the metadata an update check reads, byte for byte. A single failure
+ * only warns: the committed snapshot under web/public is copied into site/ by
+ * vite and keeps serving, so the endpoint never 404s or goes stale silently.
+ */
+async function mirrorMetadata(releases) {
+  let written = 0
+  for (const release of releases) {
+    const tag = release.tag_name ?? ''
+    if (!tagPattern.test(tag)) {
+      console.warn(`warning: skipping metadata for unusable tag ${JSON.stringify(tag)}`)
+      continue
+    }
+    for (const name of metadataNames) {
+      const asset = (release.assets ?? []).find(
+        (entry) => entry.name === name && entry.state === 'uploaded' && entry.size > 0,
+      )
+      if (!asset?.browser_download_url) {
+        continue
+      }
+      const target = join(mirrorOutput, tag, name)
+      try {
+        const bytes = await fetchBytes(asset.browser_download_url)
+        await mkdir(dirname(target), { recursive: true })
+        await writeFile(target, bytes)
+        written += 1
+      } catch (error) {
+        const kept = await isReadable(target)
+        console.warn(
+          `warning: ${kept ? 'keeping the committed' : 'no committed'} ${tag}/${name}: ${error.message}`,
+        )
+      }
+    }
+  }
+  return written
+}
+
 async function main() {
   let feed
   try {
@@ -133,7 +205,7 @@ async function main() {
   } catch (error) {
     let existing = ''
     try {
-      existing = await readFile(output, 'utf8')
+      existing = await readFile(feedOutput, 'utf8')
     } catch {
       throw new Error(`release feed is unavailable and no baseline is published: ${error.message}`)
     }
@@ -143,8 +215,11 @@ async function main() {
     )
     return
   }
-  await writeFile(output, `${JSON.stringify(feed.feed, null, 2)}\n`)
-  console.log(`release feed: ${feed.feed.length} releases, newest ${feed.newest} -> ${output}`)
+  await writeFile(feedOutput, `${JSON.stringify(feed.feed, null, 2)}\n`)
+  const mirrored = await mirrorMetadata(feed.feed)
+  console.log(
+    `release feed: ${feed.feed.length} releases, newest ${feed.newest}, ${mirrored} mirrored metadata files -> ${feedOutput}`,
+  )
 }
 
 await main()
