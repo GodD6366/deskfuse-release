@@ -1,38 +1,29 @@
-# uniDesk Releases
+# DeskFuse Releases
 
-uniDesk 的公开安装包仓库。源码在私有仓库维护，此仓库仅提供安装说明、Homebrew cask 和版本安装包。
+DeskFuse 的公开发行与官网源码。目标仓库为 `GodD6366/deskfuse-release`。
 
-[下载所有版本](https://github.com/GodD6366/unidesk-release/releases)
+[下载所有版本](https://github.com/GodD6366/deskfuse-release/releases)
 
-## DeskFuse
+## 发布状态
 
-uniDesk 将停止后续功能更新，后续版本以 **DeskFuse** 名称发布。
-最后一个 uniDesk 版本会在侧边栏常驻显示升级说明入口。
+首次发行准备中，目前没有可安装的 DeskFuse Release 或 Cask。
+发布流水线会在安装包公开后生成带有真实版本与 SHA-256 的 Cask。
 
-DeskFuse 尚未在本仓库发布；请等待本页提供正式下载入口，不要把历史 uniDesk 安装包当作 DeskFuse。
-
-DeskFuse 将采用全新的应用身份和协议，不兼容 uniDesk。安装后需要重新授权、
-重新配对设备和配置设置，旧剪贴板历史不会自动迁移。请在各台设备都准备好后
-退出 uniDesk，再使用 DeskFuse；原有数据不会因本提示而被删除。
+DeskFuse 使用独立应用身份、协议和数据目录，不读取或迁移其他产品的数据。
+首次安装需要在各设备上重新授权、配对和配置。安装器不会删除其他产品的数据。
 
 ## 安装
 
-macOS 14+，Apple Silicon。下载对应版本的 `uniDesk-arm64.dmg`，将应用拖入 Applications。每个 Release 保留 `SHA256SUMS`、`release.json` 和 `build-info.json` 供校验与追踪构建。
+macOS 14+，Apple Silicon。下载对应版本的 `DeskFuse-arm64.dmg`，将应用拖入 Applications。每个 Release 保留 `SHA256SUMS`、`release.json` 和 `build-info.json` 供校验与追踪构建。
 
 ```sh
-brew trust --cask godd6366/unidesk/unidesk
-brew tap godd6366/unidesk https://github.com/GodD6366/unidesk-release
-brew install --cask godd6366/unidesk/unidesk
+brew trust --cask godd6366/deskfuse/deskfuse
+brew tap godd6366/deskfuse https://github.com/GodD6366/deskfuse-release
+brew install --cask godd6366/deskfuse/deskfuse
 ```
 
-已有 Homebrew tap 请更新远端地址：
-
-```sh
-git -C "$(brew --repository godd6366/unidesk)" remote set-url origin https://github.com/GodD6366/unidesk-release
-brew update
-```
-
-旧版应用使用原仓库更新地址；该仓库转为私有后，旧版需从本页手动安装未来提供的新版本，才能使用新的应用内更新地址。历史安装包按原始字节保留，没有重新签名或替换。
+以上命令在首次发行和仓库切换完成后可用。网站发行地址从
+`web/src/config/distribution.json` 读取，由应用源码仓库的发行配置生成。
 
 ## 版本与源码
 

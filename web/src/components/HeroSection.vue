@@ -1,23 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { asset } from './demos'
-import { useLatestRelease, assetUrl, FALLBACK_RELEASE_TAG } from '../composables/useLatestRelease'
+import { useLatestRelease, macosAssetUrl } from '../composables/useLatestRelease'
+import { BREW_ONE_LINE } from '../config/distribution'
 import { useCopy } from '../composables/useCopy'
 
 const { release } = useLatestRelease()
 const { copied, copy } = useCopy()
 
-const BREW_ONE_LINE = 'brew trust --cask godd6366/unidesk/unidesk && brew tap godd6366/unidesk https://github.com/GodD6366/unidesk-release && brew install --cask godd6366/unidesk/unidesk'
-
-const arm64Fallback = `https://github.com/GodD6366/unidesk-release/releases/download/${FALLBACK_RELEASE_TAG}/uniDesk-arm64.dmg`
-const intelFallback = `https://github.com/GodD6366/unidesk-release/releases/download/${FALLBACK_RELEASE_TAG}/uniDesk-x86_64.dmg`
-
-const arm64Url = computed(() => assetUrl(release.value, 'uniDesk-arm64.dmg', arm64Fallback))
-const intelUrl = computed(() => assetUrl(release.value, 'uniDesk-x86_64.dmg', intelFallback))
+const arm64Url = computed(() => macosAssetUrl(release.value, 'arm64'))
+const intelUrl = computed(() => macosAssetUrl(release.value, 'x86_64'))
 const badgeText = computed(() =>
   release.value?.tag
-    ? `最新版本 ${release.value.tag} · macOS arm64 / Intel · Windows x64`
-    : `最新版本 ${FALLBACK_RELEASE_TAG} · macOS arm64 / Intel · Windows x64`,
+    ? `最新版本 ${release.value.tag} · macOS arm64 / Intel`
+    : '发行信息暂不可用 · 查看 Release 页面',
 )
 </script>
 
@@ -27,7 +23,7 @@ const badgeText = computed(() =>
       <p class="hero-badge"><span class="pulse-dot"></span>{{ badgeText }}</p>
       <h1 class="hero-title">在所有设备间<br />自由流转。</h1>
       <p class="hero-sub">
-        uniDesk 是 macOS 优先的原生桌面协作工具 —— 剪贴板同步、文件传输、暂存抽屉、键鼠共享，
+        DeskFuse 是 macOS 优先的原生桌面协作工具 —— 剪贴板同步、文件传输、暂存抽屉、键鼠共享，
         由 Rust 引擎与 SwiftUI 打造，经 QUIC 加密，只在你的可信设备之间运行。
       </p>
       <div class="hero-cta">
@@ -46,7 +42,7 @@ const badgeText = computed(() =>
 
     <div class="hero-shot" v-reveal>
       <div class="shot-frame">
-        <img :src="asset('assets/shot-clipboard.jpg')" alt="uniDesk 剪贴板界面" />
+        <img :src="asset('assets/shot-clipboard.jpg')" alt="DeskFuse 剪贴板界面" />
       </div>
     </div>
   </section>

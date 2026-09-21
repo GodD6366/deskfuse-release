@@ -74,7 +74,7 @@ const features: Feature[] = [
     <div class="section-inner">
       <div class="section-head" v-reveal>
         <p class="eyebrow">能做什么</p>
-        <h2>一台 Mac 放不下的时候，<br />uniDesk 把它们连成一体。</h2>
+        <h2>一台 Mac 放不下的时候，<br />DeskFuse 把它们连成一体。</h2>
         <p class="lead">剪贴板、文件、屏幕与键鼠，在可信设备之间自由流转。</p>
       </div>
       <div class="bento">

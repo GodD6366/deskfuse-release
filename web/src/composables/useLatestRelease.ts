@@ -1,4 +1,6 @@
 import { onMounted, ref, type Ref } from 'vue'
+import { RELEASE_REPOSITORY, RELEASES_URL, ASSETS } from '../config/distribution'
+export { FALLBACK_RELEASE_TAG } from '../config/distribution'
 
 export interface ReleaseAsset {
   name: string
@@ -10,7 +12,7 @@ export interface LatestRelease {
   assets: ReleaseAsset[]
 }
 
-const API = 'https://api.github.com/repos/GodD6366/unidesk-release/releases?per_page=5'
+const API = `https://api.github.com/repos/${RELEASE_REPOSITORY}/releases?per_page=5`
 
 let cached: Promise<LatestRelease | null> | null = null
 
@@ -49,4 +51,7 @@ export function assetUrl(release: LatestRelease | null, name: string, fallback: 
   return hit ? hit.url : fallback
 }
 
-export const FALLBACK_RELEASE_TAG = 'v0.3.3'
+export function macosAssetUrl(release: LatestRelease | null, arch: keyof typeof ASSETS): string {
+  const match = release?.assets.find((asset) => asset.name === ASSETS[arch])
+  return match?.url ?? RELEASES_URL
+}
