@@ -11,22 +11,22 @@ interface Shot {
 const shots: Record<string, Shot> = {
   clipboard: {
     src: 'assets/shot-clipboard.jpg',
-    alt: 'uniDesk 剪贴板界面',
+    alt: 'DeskFuse 剪贴板界面',
     caption: '剪贴板历史：文本、图片、文件一目了然，支持图片内容搜索',
   },
   devices: {
     src: 'assets/shot-devices.jpg',
-    alt: 'uniDesk 设备界面',
+    alt: 'DeskFuse 设备界面',
     caption: '设备页：自动发现与手动配对，连接路由与传输活动全程可见',
   },
   screens: {
     src: 'assets/shot-screens.jpg',
-    alt: 'uniDesk 屏幕与键鼠界面',
+    alt: 'DeskFuse 屏幕与键鼠界面',
     caption: '屏幕与键鼠：真实显示器布局自由摆放，共享键鼠一键开关',
   },
   remote: {
     src: 'assets/shot-remote.jpg',
-    alt: 'uniDesk 远程窗口界面',
+    alt: 'DeskFuse 远程窗口界面',
     caption: '远程窗口：把另一台设备变成一块副屏，应用与文件随手可取',
   },
 }

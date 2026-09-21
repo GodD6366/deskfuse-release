@@ -17,8 +17,8 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   <header class="nav" :class="{ scrolled }">
     <div class="nav-inner">
       <a class="nav-brand" href="#top">
-        <img :src="asset('assets/icon.png')" alt="uniDesk 图标" class="nav-logo" />
-        <span>uniDesk</span>
+        <img :src="asset('assets/icon.png')" alt="DeskFuse 图标" class="nav-logo" />
+        <span>DeskFuse</span>
       </a>
       <nav class="nav-links">
         <a href="#features">功能</a>
@@ -29,7 +29,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       <div class="nav-actions">
         <a
           class="nav-gh"
-          href="https://github.com/GodD6366/unidesk-release/releases"
+          href="https://github.com/GodD6366/deskfuse-release/releases"
           target="_blank"
           rel="noopener"
         >

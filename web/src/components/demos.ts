@@ -103,7 +103,7 @@ export const DisplaysDemo = defineDemo(() =>
       ]),
       h('div', { class: 'screen-box s1' }, [
         h('div', { class: 'screen-bar' }),
-        h('div', { class: 'screen-info' }, [h('b', '01'), h('span', '本机 · UniDesk'), h('i', '2048 × 1152 pt')]),
+        h('div', { class: 'screen-info' }, [h('b', '01'), h('span', '本机 · DeskFuse'), h('i', '2048 × 1152 pt')]),
       ]),
       h('svg', { class: 'screen-cursor', viewBox: '0 0 24 24', width: 16, height: 16, innerHTML: '<path d="M4 2l16 11-7.2 1.4L9 22z" fill="#fff" stroke="#0a0e1a" stroke-width="1.6" stroke-linejoin="round"/>' }),
     ]),

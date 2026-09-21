@@ -19,7 +19,7 @@ const rows: [string, string, string, string][] = [
       <div class="table-wrap" v-reveal>
         <table class="compare-table">
           <thead>
-            <tr><th>功能</th><th>macOS 连续互通</th><th>Deskflow</th><th class="hl">uniDesk</th></tr>
+            <tr><th>功能</th><th>macOS 连续互通</th><th>Deskflow</th><th class="hl">DeskFuse</th></tr>
           </thead>
           <tbody>
             <tr v-for="r in rows" :key="r[0]">
