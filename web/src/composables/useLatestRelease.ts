@@ -10,27 +10,37 @@ export interface LatestRelease {
   assets: ReleaseAsset[]
 }
 
+// 站点自建的 release 列表，与 GitHub Releases API 同形；api.github.com 在部分网络下不可达
+const FEED = new URL('api/releases.json', document.baseURI).toString()
 const API = 'https://api.github.com/repos/GodD6366/deskfuse-release/releases?per_page=5'
 
 let cached: Promise<LatestRelease | null> | null = null
 
+async function fetchReleases(url: string): Promise<any[] | null> {
+  try {
+    const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' } })
+    const payload = response.ok ? await response.json() : null
+    return Array.isArray(payload) && payload.length > 0 ? payload : null
+  } catch {
+    return null
+  }
+}
+
 function fetchLatest(): Promise<LatestRelease | null> {
-  return fetch(API, { headers: { Accept: 'application/vnd.github+json' } })
-    .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-    .then((releases: any[]) => {
-      if (!Array.isArray(releases) || releases.length === 0) return null
-      // 全部为 prerelease 时 /releases/latest 会 404，这里按创建时间取最新一条非草稿
-      const latest = releases.find((r) => !r?.draft)
-      if (!latest) return null
-      return {
-        tag: latest.tag_name || '',
-        assets: (latest.assets || []).map((a: any) => ({
-          name: a.name,
-          url: a.browser_download_url,
-        })),
-      }
-    })
-    .catch(() => null)
+  return (async () => {
+    const releases = (await fetchReleases(FEED)) ?? (await fetchReleases(API))
+    if (!releases) return null
+    // 全部为 prerelease 时 /releases/latest 会 404，这里按创建时间取最新一条非草稿
+    const latest = releases.find((r) => !r?.draft)
+    if (!latest) return null
+    return {
+      tag: latest.tag_name || '',
+      assets: (latest.assets || []).map((a: any) => ({
+        name: a.name,
+        url: a.browser_download_url,
+      })),
+    }
+  })()
 }
 
 /** 共享最新 release：页面内多处使用也只请求一次，失败时保持静态回退 */

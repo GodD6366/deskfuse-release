@@ -41,6 +41,16 @@ brew install --cask godd6366/unidesk/unidesk
 
 旧版应用使用原仓库更新地址；该仓库转为私有后，旧版需从本页手动安装新版本，才能使用新的应用内更新地址。
 
+## 更新检查接口
+
+站点在自定义域名下发布与 GitHub Releases API 同形的版本列表，供更新检查在 `api.github.com` 不可达时改用：
+
+```sh
+curl -fsSL https://deskfuse.godd.cc/api/releases.json
+```
+
+字段与 GitHub 一致（`tag_name`、`draft`、`prerelease`、`published_at`、`assets[].name/size/state/browser_download_url`），并额外为最新版本安装包附带 `sha256`。该文件在每次 Pages 构建时由 `web/scripts/update-feed.mjs` 刷新，另有每日定时重跑；拉取失败时继续提供仓库中已提交的快照，接口不会因限流而消失。
+
 ## 版本与源码
 
 此仓库的版本 tag 仅指向安装说明，不包含应用源码。实际构建的源码 commit 记录于每个 Release 的 `build-info.json`。历史已公开源码仍适用其原有许可；第三方组件保持各自许可。
