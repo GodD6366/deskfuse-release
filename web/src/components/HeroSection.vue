@@ -2,8 +2,11 @@
 import { computed } from 'vue'
 import { asset } from './demos'
 import { useLatestRelease, assetUrl, FALLBACK_RELEASE_TAG } from '../composables/useLatestRelease'
+import { useCopy } from '../composables/useCopy'
+import { HOMEBREW_ONE_LINE } from '../config/install'
 
 const { release } = useLatestRelease()
+const { copied, copy } = useCopy()
 
 const arm64Fallback = `https://github.com/GodD6366/deskfuse-release/releases/download/${FALLBACK_RELEASE_TAG}/DeskFuse-arm64.dmg`
 const intelFallback = `https://github.com/GodD6366/deskfuse-release/releases/download/${FALLBACK_RELEASE_TAG}/DeskFuse-x86_64.dmg`
@@ -29,6 +32,13 @@ const badgeText = computed(() =>
       <div class="hero-cta">
         <a class="btn btn-primary btn-lg" :href="arm64Url">下载 Apple Silicon 版</a>
         <a class="link-chevron" :href="intelUrl">下载 Intel 版</a>
+      </div>
+      <div class="hero-install">
+        <span class="hero-install-prompt" aria-hidden="true">$</span>
+        <code>{{ HOMEBREW_ONE_LINE }}</code>
+        <button class="hero-copy" :class="{ copied }" @click="copy(HOMEBREW_ONE_LINE)">
+          {{ copied ? '已复制 ✓' : '复制' }}
+        </button>
       </div>
       <p class="hero-note">macOS 14+ · Developer ID 签名与公证 · QUIC 加密传输</p>
     </div>

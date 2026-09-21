@@ -1,14 +1,19 @@
 /**
- * 安装方式开关。
+ * Homebrew 安装命令的唯一来源，Hero 命令行与安装卡片共用。
  *
- * 当前站点只提供 DMG 直接下载：Homebrew 方案已从页面隐藏。
- * 重新上架 Homebrew 时，把 HOMEBREW_ENABLED 改成 true，
- * 并恢复两个组件里被移除的 Homebrew 区块（Hero 命令行 + 安装卡片，见 git 历史）。
- *
- * 对应的命令（tap 已随仓库改名更新，当前站点不再渲染，故不进入打包产物）：
- *   brew trust --cask godd6366/deskfuse/deskfuse
- *   brew tap godd6366/deskfuse https://github.com/GodD6366/deskfuse-release
- *   brew install --cask godd6366/deskfuse/deskfuse
- *   brew update && brew upgrade --cask deskfuse
+ * tap 与 cask 名称随仓库改名同步；改名前的老 tap `godd6366/unidesk`
+ * 仍可通过其远端重定向继续安装。
  */
-export const HOMEBREW_ENABLED = false
+const TAP = 'godd6366/deskfuse'
+const REPO = 'https://github.com/GodD6366/deskfuse-release'
+
+export const HOMEBREW_ONE_LINE = `brew trust --cask ${TAP}/deskfuse && brew tap ${TAP} ${REPO} && brew install --cask ${TAP}/deskfuse`
+
+export const HOMEBREW_SCRIPT = [
+  `brew trust --cask ${TAP}/deskfuse`,
+  `brew tap ${TAP} \\
+  ${REPO}`,
+  `brew install --cask ${TAP}/deskfuse`,
+].join('\n')
+
+export const HOMEBREW_UPGRADE = 'brew update && brew upgrade --cask deskfuse'

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useLatestRelease, assetUrl, FALLBACK_RELEASE_TAG } from '../composables/useLatestRelease'
-import { HOMEBREW_ENABLED } from '../config/install'
+import { useCopy } from '../composables/useCopy'
+import { HOMEBREW_ONE_LINE, HOMEBREW_SCRIPT, HOMEBREW_UPGRADE } from '../config/install'
 
 const { release } = useLatestRelease()
+const { copied, copy } = useCopy()
 
 const rel = (name: string) =>
   `https://github.com/GodD6366/deskfuse-release/releases/download/${FALLBACK_RELEASE_TAG}/${name}`
@@ -25,11 +27,23 @@ const platforms: [string, string, string][] = [
     <div class="section-inner">
       <div class="section-head" v-reveal>
         <p class="eyebrow">安装</p>
-        <h2>{{ HOMEBREW_ENABLED ? '两种方式，一分钟上手。' : '下载 DMG，一分钟上手。' }}</h2>
+        <h2>两种方式，一分钟上手。</h2>
       </div>
-      <div class="install-grid" :class="{ 'install-grid-single': !HOMEBREW_ENABLED }">
+      <div class="install-grid">
         <div class="install-card" v-reveal>
-          <h3>下载 DMG 安装</h3>
+          <h3>Homebrew <span class="tag">推荐</span></h3>
+          <p>macOS 14+ · Apple Silicon，一条命令装好，随 brew 更新。</p>
+          <div class="code-block">
+            <button class="copy-btn" :class="{ copied }" @click="copy(HOMEBREW_ONE_LINE)">
+              {{ copied ? '已复制 ✓' : '复制' }}
+            </button>
+            <pre><code>{{ HOMEBREW_SCRIPT }}</code></pre>
+          </div>
+          <p class="install-note">升级：<code>{{ HOMEBREW_UPGRADE }}</code></p>
+        </div>
+
+        <div class="install-card" v-reveal>
+          <h3>手动安装 DMG</h3>
           <p>选择你的 Mac 芯片版本直接下载，拖入「应用程序」即可。</p>
           <ol class="steps">
             <li><a :href="arm64Url">Apple Silicon（arm64）DMG</a></li>
