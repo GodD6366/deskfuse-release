@@ -9,6 +9,9 @@ on:
   # 每天重跑一次，让 api/releases.json 在没有任何提交时也能跟上新版本
   schedule:
     - cron: "17 3 * * *"
+  # 发布新版本后立即刷新接口，不必等到下一次定时任务
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -27,7 +30,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      # release 事件指向 tag 提交，而 tag 可能是旧提交；始终部署 main 的站点源码
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'release' && 'main' || github.ref }}
 
       - uses: actions/configure-pages@v5
 
