@@ -1,4 +1,6 @@
 import { onMounted, ref, type Ref } from 'vue'
+import { RELEASE_REPOSITORY } from '../config/distribution'
+export { FALLBACK_RELEASE_TAG } from '../config/distribution'
 
 export interface ReleaseAsset {
   name: string
@@ -10,9 +12,9 @@ export interface LatestRelease {
   assets: ReleaseAsset[]
 }
 
-// 站点自建的 release 列表，与 GitHub Releases API 同形；api.github.com 在部分网络下不可达
+// 与 GitHub Releases API 同形的站点清单。优先读 API，api.github.com 不可达时再读这份清单。
 const FEED = new URL('api/releases.json', document.baseURI).toString()
-const API = 'https://api.github.com/repos/GodD6366/deskfuse-release/releases?per_page=5'
+const API = `https://api.github.com/repos/${RELEASE_REPOSITORY}/releases?per_page=5`
 
 let cached: Promise<LatestRelease | null> | null = null
 
@@ -28,7 +30,7 @@ async function fetchReleases(url: string): Promise<any[] | null> {
 
 function fetchLatest(): Promise<LatestRelease | null> {
   return (async () => {
-    const releases = (await fetchReleases(FEED)) ?? (await fetchReleases(API))
+    const releases = (await fetchReleases(API)) ?? (await fetchReleases(FEED))
     if (!releases) return null
     // 全部为 prerelease 时 /releases/latest 会 404，这里按创建时间取最新一条非草稿
     const latest = releases.find((r) => !r?.draft)
@@ -58,5 +60,3 @@ export function assetUrl(release: LatestRelease | null, name: string, fallback: 
   const hit = release?.assets.find((a) => a.name === name)
   return hit ? hit.url : fallback
 }
-
-export const FALLBACK_RELEASE_TAG = 'v0.4.0'
