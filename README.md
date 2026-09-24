@@ -8,7 +8,7 @@ DeskFuse 的公开安装包仓库。源码在私有仓库维护，此仓库仅�
 
 ## DeskFuse 安装
 
-macOS 14+，Apple Silicon。最新预发行为 **v0.4.0**，经 Developer ID 签名并公证。
+macOS 14+，Apple Silicon。最新预发行为 **v0.4.5**，经 Developer ID 签名并公证。
 
 下载 `DeskFuse-arm64.dmg`，将应用拖入 Applications。每个 Release 保留 `SHA256SUMS`、`release.json` 和 `build-info.json` 供校验与追踪构建。
 
@@ -47,9 +47,9 @@ brew install --cask godd6366/unidesk/unidesk
 
 ```sh
 curl -fsSL https://deskfuse.godd.cc/api/releases.json
-curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/SHA256SUMS
-curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/release.json
-curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.0/build-info.json
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.5/SHA256SUMS
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.5/release.json
+curl -fsSL https://deskfuse.godd.cc/api/releases/v0.4.5/build-info.json
 ```
 
 版本列表字段与 GitHub 一致（`tag_name`、`draft`、`prerelease`、`published_at`、`assets[].name/size/state/browser_download_url`），并额外为最新版本安装包附带 `sha256`；`api/releases/<tag>/` 下是与 GitHub 资产逐字节相同的元数据，软件校验 SHA-256 时仍然成立。

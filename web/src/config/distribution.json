@@ -7,5 +7,5 @@
     "arm64": "DeskFuse-arm64.dmg",
     "x86_64": "DeskFuse-x86_64.dmg"
   },
-  "fallback_release_tag": "v0.4.0"
+  "fallback_release_tag": "v0.4.5"
 }

@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - "web/**"
+      # 发布任务会在 release 创建后提交新版 Cask；用该新 commit 的 SHA
+      # 再部署一次，避免 release 事件复用旧 tag SHA 而被 Pages 当成旧部署。
+      - "Casks/**"
       - ".github/workflows/pages.yml"
   # 每天重跑一次，让 api/releases.json 在没有任何提交时也能跟上新版本
   schedule:
