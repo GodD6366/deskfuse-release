@@ -5,7 +5,8 @@
   "cask_token": "deskfuse",
   "assets": {
     "arm64": "DeskFuse-arm64.dmg",
-    "x86_64": "DeskFuse-x86_64.dmg"
+    "x86_64": "DeskFuse-x86_64.dmg",
+    "windows_x64": "DeskFuse-windows-x64-setup.exe"
   },
-  "fallback_release_tag": "v0.4.5"
+  "fallback_release_tag": "v0.5.0"
 }
